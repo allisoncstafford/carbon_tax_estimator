@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carbon Tax Swap Calculator</title>
+  
+  <link href="assets/stylesheets/jquery-ui.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/tooltipster.css" />
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/tooltipster-shadow.css" />
+  <link href="assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/stylesheets/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="assets/stylesheets/theme.css" rel="stylesheet" type="text/css">
+
+  
+  <script src="assets/javascripts/jquery-2.1.4.min.js"></script>  
+  <script src="assets/javascripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="assets/javascripts/jquery.tooltipster.js"></script>
+
+  <script src="assets/javascripts/business.js"></script>
+
+
+
+  <script type="text/javascript">
+  // Change JQueryUI plugin names to fix name collision with Bootstrap.
+    $.widget.bridge('uitooltip', $.ui.tooltip);
+    $.widget.bridge('uibutton', $.ui.button);
+  </script>
+
+    <script>
+    $(document).ready(function() {
+      $('.uitooltip').tooltipster();
+      $('#introduction_tooltip').tooltipster({
+        content: $('<div class="col-xs-12 style="float:right;"> <p> You got it! Just hover or click on any icons like this for more info. </p> </div>'),
+        position: 'top',
+        maxWidth: 1000,
+        interactive: true, 
+        theme: 'tooltipster-shadow',
+        viewportAware: true,
+        minWidth: 200
+      });
+    });
+  </script>
+
+  <script src="assets/javascripts/bootstrap.min.js"></script>
+
+</head>
+
+<body style="background-image:url(images/Mosaic-Background.gif)">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div>
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index.html" id="navbar-title">Carbon Tax Swap Calculator</a>
+          </div>
+
+          <!-- collapsable nav for small screens -->
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                      <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                      <a href="individual.html">Household Calculator</a>
+                    </li>
+                    <li class="active">
+                      <a href="business.html">Business Calculator</a>
+                    </li>
+                    <li>
+                      <a href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+      <div id="business_header">
+        <h1>Business calculator</h1>
+      </div>
+
+      <div class="form_box">
+        <ul class="nav nav-tabs wizard_tabs" role="tablist" id="wizard_tab_nav">
+          <li class="active" role="presentation"><a href="#bus_intro_page" data-toggle="tab" aria-controls="welcome" role="tab">Welcome</a></li>
+          <li role="presentation"><a href="#bus_sales_tax_page" data-toggle="tab" aria-controls="1. sales tax" role="tab">Sales Tax</a></li>
+          <li role="presentation"><a href="#bus_sales_tax_rate_page" data-toggle="tab" aria-controls="2. sales tax rate" role="tab">Sales Tax Rate</a></li>
+          <li role="presentation"><a href="#estimated_taxes_page" data-toggle="tab" aria-controls="3. B&O taxes" role="tab">Manufacturing B&O Taxes</a></li>
+          <li role="presentation"><a href="#gas_page" data-toggle="tab" aria-controls="4. gasoine and diesel usage" role="tab">Gasoline and Diesel Usage</a></li>
+          <li role="presentation"><a href="#air_page" data-toggle="tab" aria-controls="5. air travel" role="tab">Air Travel</a></li>
+          <li role="presentation"><a href="#elec_page" data-toggle="tab" aria-controls="6. facility energy usage" role="tab">Facility Energy Usage</a></li>
+          <li role="presentation"><a href="#summary_page" id="summary" data-toggle="tab" aria-controls="7. summary" role="tab">Summary</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade in active" id="bus_intro_page" role="tabpanel">
+            <h2>Welcome</h2>
+            <p>Thank you for taking the time to learn more about how Carbon Washington's proposal would impact your business</p>
+            <p>We'll ask you a few questions about your business expenses in order to best calculate how your household would be affected. We encourage you to skip around and to change your estimates to see how that affects the result.</p>
+            <p>For the best estimate, please answer all questions. The calculator will by default assume a value of 0 for all blank fields, which will affect the accuracy your results.</p>
+             <p>Curious about how we calculated a value? Check out the <img src="questionMark.png" id="introduction_tooltip" alt="question mark icon"/> icons for more detail.</p>
+            <button class="btn btn-primary next_button btn-outline">Start Calculating</button>
+          </div>
+
+          <div class="tab-pane fade" id="bus_sales_tax_page" role="tabpanel">
+            <h2>Sales Tax</h2>
+            <div>
+              <label for="salesTaxPayment" class="control-label">How much state and local sales tax does your business pay annually on goods that it buys? $</label>
+              <input type="text" id="salesTaxPayment" placeholder="Enter annual income" name="salesTaxPayment" value="0">     
+            </div>
+            <br>
+            <button class="btn btn-secondary prev_button btn-outline">Previous</button>
+            <button class="btn btn-primary next_button btn-outline" name="submitSalesTax" id="submitSalesTax">Next</button>
+          </div>
+
+          <div class="tab-pane fade" id="bus_sales_tax_rate_page" role="tabpanel">
+            <h2>Sales Tax Rate</h2>
+            <div>
+              <label for="salesTaxRate">What sales tax rate does your business pay to state and local governments? (The state rate is 6.5%; 8.95% is the average combined state-and-local rate): </label> 
+            <input type="text" id="salesTaxRate" value="8.95"> % 
+            </div>
+            <br>
+            <button class="btn btn-secondary prev_button btn-outline">Previous</button>
+            <button class="btn btn-primary next_button btn-outline" name="submitSalesTaxRate" id="submitSalesTaxRate">Next</button>
+          </div>
+
+          <div class="tab-pane fade" id="estimated_taxes_page" role="tabpanel">
+            <h2>Manufacturing B&O Taxes</h2>
+
+            <p>
+              If your business is not a manufacturer, please skip to <a id="skip_to_4" href="#" data-toggle="tab">Gasoline and Diesel Usage</a>
+            </p>
+
+            <div>
+              <p>
+                <p>The CarbonWA proposal effectively eliminates B&O taxes on manufacturing activities covered by RCW <a href="http://app.leg.wa.gov/RCW/default.aspx?cite=82.04.240" target="_blank">82.04.240</a> (general manufacturing), RCW  <a href="http://app.leg.wa.gov/RCW/default.aspx?cite=82.04.2404" target="_blank">82.04.2404</a> (semiconductors), and RCW <a href="http://app.leg.wa.gov/RCW/default.aspx?cite=82.04.260" target="_blank">82.04.260</a> (1), (2), (4), (11), or (12)(b) (food products, timber and wood products, and airplanes). Because of the Multiple Activities Tax Credit, manufacturing B&O taxes may qualify as credits against other B&O taxes, or other B&O taxes may qualify as credits against your manufacturing B&O taxes. </p>
+
+                <p>
+                  For many manufacturers, the amount you would save is likely to be the state manufacturing B&O taxes you paid on goods sold outside the state; goods sold inside the state receive the Multiple Activities Tax Credit.
+                </p>
+
+
+                <label for="BOTaxes"><p>How much would you save if the state manufacturing B&O tax were eliminated?</p></label>
+                <input type="text" id="BOTaxes" value="0"  >  
+              </p>
+            </div>
+            <br>
+            <button class="btn btn-secondary prev_button btn-outline">Previous</button>
+            <button class="btn btn-primary next_button btn-outline" name="submitBOTax" id="submitBOTax">Next</button>
+          </div>
+
+          <div class="tab-pane fade" id="gas_page" role="tabpanel">
+
+          
+
+            <h2>Gasoline and Diesel Usage</h2>
+            <p>
+              How much gasoline does your business use? Amounts for diesel vehicle, boat, and small plane fuel/mileage should also be included in the inputs for this section. Please choose <strong>one</strong> of these three calculation options:
+            </p> 
+            <!-- Radio buttons to choose submission type-->
+            <div class="btn-group" data-toggle="buttons" role="group" aria-label="gasoline options">
+              <div class="radio active">
+                <label>
+                  <input type="radio" name="gas" value="0" id ="gasOptionOne_radio" checked>By gallons used
+                </label>
+              </div>
+              <div class="radio active">
+                <label>
+                  <input type="radio" name="gas" value="1" id="gasOptionTwo_radio">By amount spent
+                </label>
+              </div>
+              <div class="radio active">
+                <label>
+                  <input type="radio" name="gas" value="2" id="gasOptionThree_radio">By mileage
+                </label>
+              </div>
+            </div>
+
+
+            <!--divs to hide and show based on radio button -->
+            <div id="gas_option_divs">
+              <div id="gasOptionOne">
+                <label for "gallons" class="col-xs-12">How many gallons does your business use? </label>
+                <div class="col-xs-12">
+                  <input type="text" class="form-control col-xs-4 pull-xs-2" id="gallons" value="0.00" sr-only="Enter gallons" required>
+                  <div>
+                    <select class="form-control col-xs-4" id="gasTimeframe">
+                      <option value="52">Week</option>
+                      <option value="12">Month</option>
+                      <option value="1">Year</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div id="gasOptionTwo">
+                <div class="col-xs-12">
+                  <label for="gasCost" class="col-xs-12">How much does your business pay per gallon? </label>
+                  <input type="text" id="gasCost" value="2.40" class="form-control col-xs-2 pull-xs-2" sr-only="Enter gallon cost in dollars" required>
+                </div>
+
+                <div class="col-xs-12">
+                  <label for="dollars" class="col-xs-12">How much does your business spend on gasoline? </label>
+                  <input type="text" id="dollars" value="0.00" class="form-control col-xs-2 pull-xs-2" sr-only="Enter gasoline total" required>
+                  <div>
+                    <select class="form-control col-xs-4" id="dollarTimeframe">
+                      <option value="52">Week</option>
+                      <option value="12">Month</option>
+                      <option value="1">Year</option>
+                    </select> 
+                  </div>
+                </div>
+              </div>
+
+                <div id="gasOptionThree">
+                  <div class="col-xs-12">
+                    <label for="mpg">How many miles per gallon do your vehicles average?</label>
+                    <input type="text" id="mpg" value="30" class="form-control">
+                  </div>
+
+                  <div class="col-xs-12">
+                    <label for="miles" class="col-xs-12">How many miles do you or your employees drive for business purposes?</label>
+                    <input type="text" id="miles" value="0" class="form-control col-xs-2 pull-xs-2" sr-only="Enter household miles" required>
+                    <div>
+                      <select class="form-control col-xs-4" id="mileageTimeframe">
+                        <option value="52">Week</option>
+                        <option value="12">Month</option>
+                        <option value="1">Year</option>                               
+                      </select>
+                    </div>
+                  </div>
+                </div> 
+            </div>
+            <br>
+            <button class="btn btn-secondary prev_button btn-outline">Previous</button>
+            <button class="btn btn-primary next_button btn-outline" id="submitGas" role="button">Next</button>
+          </div>
+
+          <div class="tab-pane fade" id="air_page" role="tabpanel">
+            <h2>Air Travel</h2>
+            <p>
+              How much air travel does your business do in a year? Please choose <strong>one</strong> of these calculation options:
+            </p> 
+
+            <!-- Radio buttons to choose submission type-->
+            <div class="btn-group" data-toggle="buttons" role="group" aria-label="air travel options">
+              <div class="radio active">
+                <label>
+                  <input type="radio" name="air" value="0" id ="airOptionOne_radio" checked>By miles flown
+                </label>
+              </div>
+              <div class="radio active">
+                <label>
+                  <input type="radio" name="air" value="1" id="airOptionTwo_radio">By amount spent
+                </label>
+              </div>
+            </div>
+
+
+            <div id="air_option_divs">
+              <div id="airOptionOne">
+                <label for="seatMiles">How many miles per year do you or those affiliated with your business travel, taking off from airports in Washington State?</label>
+                <p>
+                  Remember to add up the miles for each person. Example: Three employees from a single business fly from Seattle to Los Angeles, which is 1000 miles. 3 people x 1000 miles = 3000 miles.
+                </p>
+                <div>
+                  <input type="text" id="seatMiles" value="0"> miles 
+                </div>
+              </div>
+
+              <div id="airOptionTwo">
+                <label for="airPayments">How much does your business spend on air travel to or from airports in Washington State?</label>
+                <p>
+                  <!-- We then assume $0.13 a mile and divide by two because only half of that travel involves flights taking off from airports in Washington State. --> First class or business class is taken care of automatically because they're more expensive.
+                </p>
+                <div>
+                  <span>$</span><input type="text" id="airPayments" value="0"> per year 
+                </div>
+              </div>
+            </div>
+            <br>
+            <button class="btn btn-secondary prev_button btn-outline">Previous</button>
+            <button class="btn btn-primary next_button btn-outline" id="submitAir">Next</button>
+          </div>
+
+          <div class="tab-pane fade" id="elec_page" role="tabpanel">
+            <h2>Facility Energy Usage</h2>
+            <p>
+              How much energy does your business use? Please complete the steps below:
+            </p> 
+            <div>
+              <div id="electricBlock">
+                <h3>Step 1</h3>
+                <label for="zipcode">What zipcode your business is located in:</label>
+                <input type="text" id="zipcode" value="98328"> 
+                <input type="button" value="Submit Zipcode and Continue" class="btn btn-primary btn-medium" id="submitZipcode"> <br><br>
+              </div>
+              <div class="reveal" id="utilityBlock">
+                <h3>Step 2</h3>
+                <label for="utilities">Who is the electic utility provider for your business?</label>
+                Choose the electric utility for your business (if the correct utility is not listed, first check that the zipcode is correct, and then contact us at <a href="mailto:carbon@cs.washington.edu">carbon@cs.washington.edu</a>):
+                <select id="utilities" >
+                </select>
+                <input type="button" value="Submit Utility and Continue" class="btn btn-primary btn-medium" id="submitUtility"><br>
+              </div>
+
+              <div class="reveal" id="utilityMemory">
+                <input type="text" id="utilityRemembered" value=""> 
+              </div>
+
+              <div class="reveal" id="approxOrExact">
+                <h3>Step 3</h3>
+                <br><p>Do you know your business's energy usage in units of therms, kWh, etc. (from utility bills or another source)?</p>
+                <label><input type="radio" name="approxOrExactStatus" value="0" id="exact">Yes
+                  
+                </label>
+                <label><input type="radio" name="approxOrExactStatus" value="1" id="approx">No
+                </label>
+                
+              </div>
+
+              <div class="reveal" id="energyUsage">
+                
+                <h3>Step 4</h3>
+                <span id="exactLabel">Enter your business&#39;s energy use per year:</span> <br>
+                <input type="text" id="thermsNatGas" value="0"> therms of natural gas<br>
+                <input type="text" id="gallonsFuelOil" value="0"> gallons of fuel oil<br>
+                <input type="text" id="kWhElec" value="0"> kWh of electricity<br>
+              </div>
+              <div class="reveal" id="approxEnergyDiv">
+                <div class="reveal" id="approxEnergy" >
+                  <h3>Step 4</h3>
+                  We will attempt to help you estimate your business&#39;s energy usage by comparing it to an average house in Washington State. Note that this is just a ballpark estimate and may only be appropriate for certain kinds of businesses. <br><br>
+                  How is your business heated? <br>
+                  <input class="radioLeft" type="radio" name="heating" value="0">
+                  Natural gas<br>
+                  <input class="radioLeft" type="radio" name="heating" value="1">
+                  Fuel oil<br>
+                  <input class="radioLeft" type="radio" name="heating" value="2">
+                  Electricity<br>
+                  <input class="radioLeft" type="radio" name="heating" value="3">
+                  Wood or wood pellets<br>
+                  <input class="radioLeft" type="radio" name="heating" value="4">
+                  Other/don't know (we will assume you use natural gas.)<br><br>
+                </div>
+                <div class="reveal" id="approxPercentage" >
+                  <h3>Step 5</h3>
+                  How much purchased energy do you think your business uses compared to an average house in Washington (2000 sq ft, 3 bedrooms, etc.)? Enter this as a percentage. For example, if your business uses half the energy of an average home, enter "50". If your business uses twice the energy of an average home, enter "200": <br><br>
+
+                  <input type="text" id="percentOfAverage" value="100"> %
+
+                </div>
+              </div>
+            </div>
+            <br>
+            <button class="btn btn-secondary prev_button btn-outline">Previous</button>
+            <button class="btn btn-primary next_button btn-outline" id="elecUsage" role="button">Next</button>
+          </div>
+
+          <div class="tab-pane fade" id="summary_page" role="tabpanel">
+            <h2 class="fs-title">Summary</h2>
+
+            <p>We estimate that your business's additional tax <strong>savings</strong> as a result of implementing I-732 would total $<span id="totalSavings_static" class="final save">0</span> per year.</p>
+            <p>We estimate that your business's additional tax <strong>payments</strong> as a result of implementing I-732 would total $<span id="totalCosts_static" class="final pay">0</span> per year. </p>
+
+            <div id="results">
+              <p>In total we estimate your business would <span id="final_summary" ></span> an additional $<span id ="totalNet_static" class="final">0</span> per year as a result of implementing I-732.</p>
+            </div>
+
+            <h2>Calculations</h2>
+            <p>Interested in how we reached that conclusion? Check out the sections below.</p>
+            <ul class="nav nav-pills" data-tables="tabs" role="tablist">
+              <li class="active"><a data-toggle="pill" href="#salesTax_results">Sales Tax Savings</a></li>
+              <li><a data-toggle="pill" href="#BO_results">B&O Tax Savings</a></li>
+              <li><a data-toggle="pill" href="#Gas_results">Gasoline and Diesel Usage</a></li>
+              <li><a data-toggle="pill" href="#Air_results">Air Travel</a></li>
+              <li><a data-toggle="pill" href="#Energy_results">Facility Energy Usage</a></li>
+            </ul>
+
+            <div class="tab-content">
+
+              <div id="salesTax_results" class="tab-pane fade in active" role="tabpanel">
+                <h3>Sales Tax Savings</h3>
+                <p>
+                  With a 1 percentage point reduction in sales tax, we estimate that your business would save $<span id ="salesTaxSavings" class="final save">0</span> per year.
+                </p>
+              </div>
+
+              <div id="BO_results" class="tab-pane fade" role="tabpanel">
+                <h3>B&O Taxes</h3>
+                <p>
+                  With the elimination of state manufacturing B&O taxes, we estimate that your business would save $<span id = "BOTaxSavings_sum" class="final save">0</span> per year.
+                </p>
+              </div>
+
+              <div id="Gas_results" class="tab-pane fade" role="tabpanel">
+                <h3>Gasoline and Diesel Usage</h3>
+                <p>
+                  We estimate that your business would spend $<span id ="gasolineLosses" class="final pay">0</span> more per year due to carbon taxes on gasoline.
+                </p>
+              </div>
+
+              <div id="Air_results" class="tab-pane fade" role="tabpanel">
+                <h3>Air Travel</h3>
+                <p>
+                  We estimate that your business would spend $<span id="airTaxes" class="final pay">0</span> more per year due to carbon taxes on jet fuel.
+                </p>
+              </div>
+
+              <div id="Energy_results" class="tab-pane fade" role="tabpanel">
+                <h3>Facility Energy Usage</h3>
+                <div>
+                  <p>We estimate that your business would spend this much more due to carbon taxes on fossil fuel sources of energy:</p>
+                  <p><label for="natGasLosses" class="lineupLabel">Natural gas: $<span id="natGasLosses" class="final pay">0</span>per year</label></p>
+                  <p><label for="fuelOilLosses" class="lineupLabel">Fuel oil: $<span id = "fuelOilLosses" class= "final pay">0</span> per year</label></p>
+                  <p><label for="elecLosses" class="lineupLabel">Electricity: $<span id ="elecLosses" class="final pay">0</span> per year</label></p>
+                  <p><label for="homeEnergyLosses" class="lineupLabel">Total: $<span id="homeEnergyLosses" class="final pay">0</span> per year</label></p>
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <p>Thank you! And feel free to go back and change any information to see how it affects the results. If you have any feedback about this website, please contact us at <a href="mailto:carbon@cs.washington.edu">carbon@cs.washington.edu</a>.</p>
+            <button class="btn btn-secondary prev_button">Previous</button>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+  <script>
+    // $('.next_button').click(function(){
+    //   $('.nav-tabs > .active').next('li').find('a').trigger('click');
+    // });
+
+    // $('.prev_button').click(function(){
+    //   $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+    // });
+  </script>
+
+  <script>
+    // $('#skip_to_4').click(function(){
+    //   $('#wizard_tab_nav a[href="#gas_page"]').tab('show');
+    // });
+  </script>
+
+
+<!--show appropriate gas section -->
+  <script>
+    $("#gasOptionOne_radio").click(function(){
+      $("#gasOptionOne").show();
+      $("#gasOptionTwo").hide();
+      $("#gasOptionThree").hide();
+    });
+
+    $("#gasOptionTwo_radio").click(function(){
+      $("#gasOptionTwo").show();
+      $("#gasOptionOne").hide();
+      $("#gasOptionThree").hide();
+    });
+
+    $("#gasOptionThree_radio").click(function(){
+      $("#gasOptionThree").show();
+      $("#gasOptionOne").hide();
+      $("#gasOptionTwo").hide();
+    });
+  </script>
+
+  <!-- show appropriate air section -->
+  <script>
+    $("#airOptionOne_radio").click(function(){
+        $("#airOptionOne").show();
+        $("#airOptionTwo").hide();
+      });
+
+      $("#airOptionTwo_radio").click(function(){
+        $("#airOptionTwo").show();
+        $("#airOptionOne").hide();
+      });
+  </script>
+
+  <script>
+    $("#exact").click(function(){
+        $("#energyUsage").show();
+        $("#approxEnergy").hide();
+        $("#approxPercentage").hide();
+      });
+
+      $("#approx").click(function(){
+        $("#approxEnergy").show();
+        $("#energyUsage").hide();
+      });
+  </script>
+
+  <script>
+    $("#exact").click(function(){
+      $("#energyUsage").show();
+      $("#approxEnergyDiv").hide();
+    });
+
+    $("#approx").click(function(){
+      $("#approxEnergyDiv").show();
+      $("#approxEnergy").show();
+      $("#energyUsage").hide();
+      
+    });
+
+    $("[name='heating']").click(function(){
+      $("#approxPercentage").show();
+      
+    });
+  </script>
+
+</body>
+</html>

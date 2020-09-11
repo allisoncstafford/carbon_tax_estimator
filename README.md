@@ -1,15 +1,18 @@
-# CalculatorVisualDesign
+# Washington State Carbon Tax Calculator
 
-## Version 7.0
+## Description
 
-### To run this website from your local machine (Windows OS):
+This tool estimates and illustrates the effects of proposed legislation including:
+* carbon tax on fuels
+* rebate for low and moderate income households.
 
-Download Python
+## To run this website from your local machine (Windows OS):
 
-Start a server: python -m http.server 8888
+1. Download Python
+2. Navigate to this directory
+3. Start a server: `python -m http.server 8888`
+4. Go to http://localhost:8888/
 
-Go to http://localhost:8888/Documents/GitHub/CalculatorVisualDesign/
+## Acknowledgements:
 
-### To view the website using the most up-to-date gh-pages branch from the repo:
-
-Go to http://www.justin-bare.com/CalculatorVisualDesign/
+This site is an updated/adapted version of the site created by a University of Washington team to illustrate the effects of WA Initiative 732 on individual households. It included contributions from Justin Bare, Alan Borning, Brittany Bently, Yorem Bauman, Daniel Stocks.

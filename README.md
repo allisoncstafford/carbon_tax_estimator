@@ -15,4 +15,4 @@ This tool estimates and illustrates the effects of proposed legislation includin
 
 ## Acknowledgements:
 
-This site is an updated/adapted version of the site created by a University of Washington team to illustrate the effects of WA Initiative 732 on individual households. It included contributions from Justin Bare, Alan Borning, Brittany Bently, Yorem Bauman, Daniel Stocks.
+This site is based on an earlier site designed to inform deliberation about a 2016 Washington State Initiative, the Carbon Tax Swap Calculator, designed by Justin Bare, Alan Borning, and Brittany Bentley, with methodology developed by Yoram Bauman and Justin Bare.
